@@ -1,8 +1,9 @@
-import { configure } from '@serenity-js/core';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+const { configure, ArtifactArchiver } = require('@serenity-js/core');
+const { SerenityBDDReporter } = require('@serenity-js/serenity-bdd');
 
 configure({
-	crew: [
-		['@serenity-js/core:ArtifactArchiver', { outputDirectory: 'target/site/serenity' }],
-		['@serenity-js/serenity-bdd', { specDirectory: 'features' }],
-	],
+	crew: [ArtifactArchiver.fromJSON({ outputDirectory: 'target/site/serenity' }), SerenityBDDReporter.fromJSON({ specDirectory: 'features' })],
 });
